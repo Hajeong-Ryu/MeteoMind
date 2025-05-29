@@ -46,22 +46,20 @@ def get_city_weather():
 
 
     for row in rows:
+        city = row.find("th").text.strip() # 도시 이름
         cols = row.find_all("td")
         if len(cols) < 10: continue
 
-        city = cols[1].text.strip() # 도시
-        temp = cols[5].text.strip() # 기온
-        sensible_temp = cols[7].text.strip() # 체감온도
-        humidty = cols[8].text.strip() # 습도
+        temp = cols[4].text.strip() # 기온
+        sensible_temp = cols[6].text.strip() # 체감온도
+        humidity = cols[8].text.strip() # 습도
         #weather = cols[1].text.strip() # 날씨
         #wind = cols[?].text.strip() # 풍력
-
-       #cols[8]은 습도
 
         print(f"도시 : {city}")
         print(f"기온: {temp}")
         print(f"체감온도: {sensible_temp}")
-        print(f"습도: {humidty}")
+        print(f"습도: {humidity}")
       #print(f"날씨: {weather}")
         #print(f"풍속: {wind}")
         print()
