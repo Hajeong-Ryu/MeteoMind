@@ -286,3 +286,6 @@ def get_city_weather():
         print(f"미세먼지: {pm10 if pm10 else '정보없음'} ㎍/m³")
         print(f"초미세먼지: {pm25 if pm25 else '정보없음'} ㎍/m³")
         print()
+
+if __name__ == "__main__":
+    get_city_weather()
