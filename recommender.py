@@ -21,7 +21,7 @@ def generate_recommendations(parsed_data):
         elif temp >= 12:
             clothes = "자켓, 얇은 코트를 착용하세요"
         elif temp >= 9:
-            clothes = "트렌치코트, 두꺼운 니트를 착용하세요요"
+            clothes = "트렌치코트, 두꺼운 니트를 착용하세요"
         elif temp >= 5:
             clothes = "코트, 가죽자켓, 히트텍 착용을 권장합니다."
         else:

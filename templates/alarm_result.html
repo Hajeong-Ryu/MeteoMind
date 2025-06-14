@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>{{ city }} 날씨 및 추천 결과</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+        h1, h2 { color: #2c3e50; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        th { background-color: #ecf0f1; }
+        .alarm { background-color: #fdecea; color: #c0392b; padding: 10px; margin-bottom: 15px; border-radius: 5px; }
+        .no-alarm { background-color: #e8f8f5; color: #16a085; padding: 10px; margin-bottom: 15px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>{{ city }} 날씨 및 추천 결과</h1>
+
+    <h2>날씨별 추천</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>시간</th>
+                <th>기온 (℃)</th>
+                <th>강수 유형</th>
+                <th>습도 (%)</th>
+                <th>풍속 (m/s)</th>
+                <th>의상 추천</th>
+                <th>활동 추천</th>
+                <th>외출 여부</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for r in results %}
+            <tr>
+                <td>{{ r.hour }}시</td>
+                <td>{{ r.temperature }}</td>
+                <td>{{ r.rain_type }}</td>
+                <td>{{ r.humidity }}</td>
+                <td>{{ r.wind_speed }}</td>
+                <td>{{ r.clothes }}</td>
+                <td>{{ r.activity }}</td>
+                <td>{{ r.going_out }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>경고 알림</h2>
+    {% for alarm in alarms %}
+        {% set alarm_text = alarm.alarm | default('') %}
+        {% if "특별한 경고" in alarm.alarm %}
+            <div class="no-alarm">{{ alarm.hour }}시: {{ alarm_text }}</div>
+        {% else %}
+            <div class="alarm">{{ alarm.hour }}시: {{ alarm_text }}</div>
+        {% endif %}
+    {% endfor %}
+
+    <a href="/">돌아가기</a>
+</body>
+</html>

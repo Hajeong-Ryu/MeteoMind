@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from get_city_weather import get_weather_by_city
 from recommender import generate_recommendations
+from alarm_system import generate_alarms, summarize_alarm
 
 app = Flask(__name__)
 
@@ -15,8 +16,16 @@ def result():
     if not parsed_data:
         return f"<h2>{city}에 대한 정보를 찾을 수 없습니다."
     recommendations = generate_recommendations(parsed_data)
-    return render_template("result.html", results=recommendations, city=city)
+    alarms = generate_alarms(parsed_data)
+    summarized_alarms = []
+    for a in alarms:
+        summarized = summarize_alarm(a['alarm'])
+        summarized_alarms.append({
+            'city': a['city'],
+            'hour': a['hour'],
+            'alarm': summarized
+        })
+    return render_template("result.html", results=recommendations, city=city, alarms=summarized_alarms)
     
 if __name__ == "__main__":
     app.run(debug=True)
-
