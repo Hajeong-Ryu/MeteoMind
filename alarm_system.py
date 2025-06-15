@@ -3,8 +3,12 @@ def generate_alarms(weather_data_list):
 
     for entry in weather_data_list:
         city = entry.get('city')
-        hour = entry.get('hour')
+        hour = int(entry.get('hour')) if entry.get('hour') is not None else None
         temp = entry.get('temperature')
+        try:
+            temp = float(temp) if temp is not None else None
+        except ValueError:
+            temp = None
         wind_speed = entry.get('wind_speed')
         dust_avg = entry.get('dust_avg', 0)
         uv_index = entry.get('uv_index', 0)

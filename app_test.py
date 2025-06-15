@@ -15,6 +15,8 @@ def result():
     parsed_data = get_weather_by_city(city)
     if not parsed_data:
         return f"<h2>{city}에 대한 정보를 찾을 수 없습니다."
+    if not isinstance(parsed_data, list):
+        parsed_data = [parsed_data]
     recommendations = generate_recommendations(parsed_data)
     alarms = generate_alarms(parsed_data)
     summarized_alarms = []

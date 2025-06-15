@@ -101,13 +101,11 @@
         <div class="info"><span class="label">🚶 외출 가능 여부:</span> {{ r.going_out }}</div>
     
         {#카드 내부 경고 알림#}
-        {% set matched_alarm = (alarms | selectattr("hour", "equalto", r.hour) | list) %}
-        {% if matched_alarm and matched_alarm[0].alarm %}
-            {% if "특별한 경고" in matched_alarm[0].alarm %}
-                <div class="no-alarm">{{ matched_alarm[0].hour }}시: {{ matched_alarm[0].alarm }}</div>
-            {% else %}
-                <div class="alarm">{{ matched_alarm[0].hour }}시: {{ matched_alarm[0].alarm }}</div>
-            {% endif %}
+        {% set matched_alarm = (alarms | selectattr("hour", "equalto", r.hour | int) | list) %}
+        {% if matched_alarm %}
+            <div class="{{ 'no-alarm' if '특별한 경고' in matched_alarm[0].summary else 'alarm' }}">    
+                {{ matched_alarm[0].hour }}시: {{ matched_alarm[0].summary }}
+            </div>
         {% else %}
             <div class="no-alarm">현재 경고 알림이 없습니다.</div>
         {% endif %}
