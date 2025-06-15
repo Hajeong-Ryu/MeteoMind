@@ -18,12 +18,17 @@ def result():
     recommendations = generate_recommendations(parsed_data)
     alarms = generate_alarms(parsed_data)
     summarized_alarms = []
-    for a in alarms:
-        summarized = summarize_alarm(a['alarm'])
+    if alarms:
+        for a in alarms:
+            summarized = summarize_alarm(a['alarm'])
+            summarized_alarms.append({
+                'hour': a['hour'],
+                'alarm': summarized
+            })
+    else:
         summarized_alarms.append({
-            'city': a['city'],
-            'hour': a['hour'],
-            'alarm': summarized
+            'hour': '',
+            'alarm': "현재 특별한 경고가 없습니다."
         })
     return render_template("result.html", results=recommendations, city=city, alarms=summarized_alarms)
     

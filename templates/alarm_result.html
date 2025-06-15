@@ -47,14 +47,19 @@
     </table>
 
     <h2>경고 알림</h2>
-    {% for alarm in alarms %}
-        {% set alarm_text = alarm.alarm | default('') %}
-        {% if "특별한 경고" in alarm.alarm %}
-            <div class="no-alarm">{{ alarm.hour }}시: {{ alarm_text }}</div>
+    {% set has_real_alarm = alarms | selectattr("alarm") | list | length > 0 %}
+    {% if has_real_alarm %}
+        {% for alarm in alarms %}
+            {% set alarm_text = alarm.alarm | default('') %}
+            {% if "특별한 경고" in alarm.alarm %}
+                <div class="no-alarm">{{ alarm.hour }}시: {{ alarm_text }}</div>
         {% else %}
             <div class="alarm">{{ alarm.hour }}시: {{ alarm_text }}</div>
         {% endif %}
     {% endfor %}
+    {% else %}
+        <div class="no-alarm">현재 경고 알림이 없습니다.</div>
+    {% endif %}
 
     <a href="/">돌아가기</a>
 </body>
